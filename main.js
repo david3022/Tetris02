@@ -1,3 +1,5 @@
+
+
 import './style.css'
 
 //1. Inicializar el Canvas
@@ -277,17 +279,22 @@ function removeRows(){
 
 }
 
-document.querySelector("section").addEventListener("click",()=>{
-update();
-const audio=new window.Audio("./tetris.mp3")
-audio.volume=0.5
-audio.play()
-audio.addEventListener("ended", () => {
-  // Cuando la pista de audio termine, reiniciar la reproducción
-  audio.currentTime = 0;
-  audio.play();
+let audioPlaying = false; 
+document.querySelector("section").addEventListener("click", () => {
+  if (!audioPlaying) { 
+    audioPlaying = true; 
+    update();
+    const audio = new window.Audio("./tetris.mp3");
+    audio.volume = 0.5;
+    audio.play();
+    audio.addEventListener("ended", () => {
+      
+      audio.currentTime = 0;
+      audio.play();
+    });
+    audio.addEventListener("pause", () => {
+      audioPlaying = false; 
+    });
+  }
 });
-audio.play();
-}
-)
 
